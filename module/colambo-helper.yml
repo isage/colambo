@@ -1,0 +1,22 @@
+colambo-helper:
+  attributes: 0
+  version:
+    major: 1
+    minor: 0
+  main:
+    start: module_start
+    stop: module_stop
+  libraries:
+    colambo-helper:
+      syscall: true
+      functions:
+        - colamboGetInfo
+        - colamboGetMonitorData
+        - colamboGetDumpProgress
+        - colamboDumpIdstorage
+        - colamboDumpAbbyRegisters
+        - colamboDumpAbbyDataflash
+        - colamboDumpCookieRegisters
+        - colamboDumpElmoRegisters
+        - colamboDumpNvs
+        - colamboDumpInfo
