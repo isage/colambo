@@ -31,7 +31,6 @@ static int _dump_progress = 0;
 int ksceSysconGetMultiCnInfo(SceUInt32 *pInfo);
 
 int sceSysconBatteryReadRegForDriver(SceUInt16 reg,SceUInt16 *data);
-int sceSysconBatteryReadReg2ForDriver(SceUInt16 reg,SceUInt16 *data);
 int sceSysconBatteryWriteRegForDriver(SceUInt16 reg,SceUInt16 data);
 
 int sceSysconReadCookieRegForDriver(SceUInt8 reg,SceUInt16 *data);
@@ -533,9 +532,7 @@ int colamboGetMonitorData(monitor_t* monitor_out)
   return ret;
 }
 
-
-void _start() __attribute__((weak, alias("module_start")));
-int module_start(SceSize args, void *argp)
+int init_thread(SceSize args, void *argp)
 {
   // todo: import dumping functions?
 
@@ -549,6 +546,8 @@ int module_start(SceSize args, void *argp)
       ksceIoClose(fd);
       info.prevFw = *(unsigned int *)(buf + 0x92); //at 0x92 in file is firmware
   }
+  else
+      ksceDebugPrintf("prev fw ret = 0x%08x\n", fd);
 
   info.socRev = kscePervasiveGetSoCRevision();
 
@@ -595,6 +594,10 @@ int module_start(SceSize args, void *argp)
     else
         strncat(info.str2, "-", 0x100);
   }
+  else
+  {
+    ksceDebugPrintf("leaf 100 ret = 0x%08x\n", ret);
+  }
 
   ret = ksceIdStorageReadLeaf(0x102, buf);
   if (ret >= 0)
@@ -638,6 +641,10 @@ int module_start(SceSize args, void *argp)
     info.softVer[0] = l102->softVer[0];
     info.softVer[1] = l102->softVer[1];
     info.softVer[2] = l102->softVer[2];
+  }
+  else
+  {
+    ksceDebugPrintf("leaf 102 ret = 0x%08x\n", ret);
   }
 
   ret = ksceIdStorageReadLeaf(0x103, buf);
@@ -706,14 +713,26 @@ int module_start(SceSize args, void *argp)
     else
         strncat(info.lcdLotInfo, "-", 0x20);
   }
+  else
+  {
+    ksceDebugPrintf("leaf 103 ret = 0x%08x\n", ret);
+  }
 
   ret = ksceIdStorageReadLeaf(0x104, buf);
   if (ret >= 0) info.diagnosticsRun = 1;
+  else
+  {
+    ksceDebugPrintf("leaf 104 ret = 0x%08x\n", ret);
+  }
 
   ret = ksceIdStorageReadLeaf(0x113, buf);
   if (ret >= 0)
   {
     strncat(info.imei, buf, 32);
+  }
+  else
+  {
+    ksceDebugPrintf("leaf 113 ret = 0x%08x\n", ret);
   }
 
   ret = ksceIdStorageReadLeaf(0x115, buf);
@@ -721,11 +740,19 @@ int module_start(SceSize args, void *argp)
   {
     strncat(info.productTypeInfo, buf, 0x10);
   }
+  else
+  {
+    ksceDebugPrintf("leaf 115 ret = 0x%08x\n", ret);
+  }
 
   ret = ksceIdStorageReadLeaf(0x117, buf);
   if (ret >= 0)
   {
     memcpy(info.temperatureThreshhold, buf, 4);
+  }
+  else
+  {
+    ksceDebugPrintf("leaf 117 ret = 0x%08x\n", ret);
   }
 
   ret = ksceIdStorageReadLeaf(0x119, buf);
@@ -733,8 +760,23 @@ int module_start(SceSize args, void *argp)
   {
     memcpy(info.ethMacAddress, buf, 6);
   }
+  else
+  {
+    ksceDebugPrintf("leaf 119 ret = 0x%08x\n", ret);
+  }
 
   ksceSysconNvsReadData(0x4E0, info.kibanId, 0x10);
+
+  return 0;
+}
+
+void _start() __attribute__((weak, alias("module_start")));
+int module_start(SceSize args, void *argp)
+{
+  SceUID t = ksceKernelCreateThread("ColamboThread", init_thread, 0x3C, 0x1000, 0, 0x10000, 0);
+  ksceKernelStartThread(t, 0,NULL);
+  int status = 0;
+  ksceKernelWaitThreadEnd(t, &status, 0);
 
   sceHprmSetConnectCallbackForDriver(connect_cb, &monitor);
 
