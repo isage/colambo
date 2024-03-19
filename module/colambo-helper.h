@@ -129,6 +129,11 @@ extern "C"
     uint16_t voltageCalib;
     uint16_t currentCalibRam;
     uint16_t currentCalib;
+    uint16_t abbyRegSOH; // 0x20
+    uint16_t abbyRegFlags; // 0x0A
+    uint16_t abbyRegStatus; // 0x00
+    uint16_t abbyRegRC; // 0x10
+    uint16_t abbyRegFCC; // 0x12
   } monitor_t;
 
 #pragma pack(pop)
@@ -143,6 +148,7 @@ extern "C"
   int colamboDumpElmoRegisters();
   int colamboDumpNvs();
   int colamboDumpInfo();
+  int colamboResetAbby();
 
 
 #ifdef __cplusplus

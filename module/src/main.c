@@ -32,6 +32,7 @@ int ksceSysconGetMultiCnInfo(SceUInt32 *pInfo);
 
 int sceSysconBatteryReadRegForDriver(SceUInt16 reg,SceUInt16 *data);
 int sceSysconBatteryWriteRegForDriver(SceUInt16 reg,SceUInt16 data);
+int sceSysconBatteryControlCommandForDriver(SceUInt16 reg,SceUInt16 *data);
 
 int sceSysconReadCookieRegForDriver(SceUInt8 reg,SceUInt16 *data);
 int sceSysconWriteCookieRegForDriver(SceUInt8 reg,SceUInt16 data);
@@ -455,7 +456,7 @@ int colamboDumpElmoRegisters()
 static int colamboDumpNvs_thread(SceSize args, void* argp)
 {
   ksceIoMkdir("ux0:data/Colambo/nvs/", 0777);
-\
+
   if (_dump_progress < 100) _dump_progress = 100;
 
   // todo: zip? or on client?
@@ -514,6 +515,17 @@ int colamboGetMonitorData(monitor_t* monitor_out)
   sceSysconReadCookieRegForDriver(1, &monitor.cookieReg01);
   sceSysconReadCookieRegForDriver(2, &monitor.cookieReg02);
 
+  monitor.abbyRegSOH = 0;
+  monitor.abbyRegFlags = 0;
+  monitor.abbyRegStatus = 0;
+  monitor.abbyRegRC = 0;
+  monitor.abbyRegFCC = 0;
+  sceSysconBatteryReadRegForDriver(0x20, &monitor.abbyRegSOH);
+  sceSysconBatteryReadRegForDriver(0x0A, &monitor.abbyRegFlags);
+  sceSysconBatteryReadRegForDriver(0x10, &monitor.abbyRegRC);
+  sceSysconBatteryReadRegForDriver(0x12, &monitor.abbyRegFCC);
+  sceSysconBatteryControlCommandForDriver(0x0000, &monitor.abbyRegStatus);
+
   SceSysconPacket packet = {0};
   packet.tx[0] = 0x04;
   packet.tx[1] = 0;
@@ -530,6 +542,19 @@ int colamboGetMonitorData(monitor_t* monitor_out)
 
   EXIT_SYSCALL(state);
   return ret;
+}
+
+int colamboResetAbby()
+{
+  uint32_t state;
+  ENTER_SYSCALL(state);
+
+  uint16_t data;
+  sceSysconBatteryControlCommandForDriver(0x21, &data);
+  sceSysconBatteryControlCommandForDriver(0x41, &data);
+
+  EXIT_SYSCALL(state);
+  return 0;
 }
 
 int init_thread(SceSize args, void *argp)

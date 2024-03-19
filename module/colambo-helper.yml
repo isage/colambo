@@ -12,6 +12,7 @@ colambo-helper:
       functions:
         - colamboGetInfo
         - colamboGetMonitorData
+        - colamboResetAbby
         - colamboGetDumpProgress
         - colamboDumpIdstorage
         - colamboDumpAbbyRegisters

@@ -88,6 +88,12 @@ namespace Colambo
             Renderer::getInstance()->font.draw(8, 16+16*10, fmt::format("VC calib:"), VGA_COLORS[0x34]);
             Renderer::getInstance()->font.draw(288, 16+16*10, fmt::format("VolrageRam: 0x{:04X} Voltage: 0x{:04X} CurrentRam: 0x{:04X} Current: 0x{:04X}", _monitor.voltageCalibRam, _monitor.voltageCalib, _monitor.currentCalibRam, _monitor.currentCalib), VGA_COLORS[0x1F]);
 
+            Renderer::getInstance()->font.draw(8, 16+16*12, fmt::format("Abby:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*12, fmt::format("Flags: 0x{:04X} Status: 0x{:04X} SOH: 0x{:04X}", _monitor.abbyRegFlags, _monitor.abbyRegStatus, _monitor.abbyRegSOH), VGA_COLORS[0x1F]);
+
+            Renderer::getInstance()->font.draw(8, 16+16*14, fmt::format("Abby:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*14, fmt::format("RC: 0x{:04X} FCC: 0x{:04X}", _monitor.abbyRegRC, _monitor.abbyRegFCC), VGA_COLORS[0x1F]);
+
 //            drawHelpText("Test");
         }
 
@@ -119,6 +125,9 @@ namespace Colambo
                     break;
                 case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
                     game->setState(new General());
+                    break;
+                case SDL_CONTROLLER_BUTTON_A:
+                    colamboResetAbby();
                     break;
                 default:
                   break;
