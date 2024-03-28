@@ -76,7 +76,7 @@ namespace Colambo
             Renderer::getInstance()->font.draw(16, 16+16*5, fmt::format("Dump Abby dataflash"), VGA_COLORS[0x34]);
             Renderer::getInstance()->font.draw(16, 16+16*6, fmt::format("Dump Cookie registers"), VGA_COLORS[0x34]);
             Renderer::getInstance()->font.draw(16, 16+16*7, fmt::format("Dump Elmo registers"), VGA_COLORS[0x34]);
-//            Renderer::getInstance()->font.draw(16, 16+16*8, fmt::format("Dump NVS"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(16, 16+16*8, fmt::format("Reset abby"), VGA_COLORS[0x34]);
 
             switch(_submenu)
             {
@@ -99,7 +99,7 @@ namespace Colambo
                     drawHelpText("Press X to dump Elmo registers to ux0:/data/Calambo/elmo/");
                     break;
                 case 6:
-                    drawHelpText("Press X to dump NVS to ux0:/data/Calambo/nvs/");
+                    drawHelpText("Press X to reset Abby FG");
                     break;
              }
         }
@@ -131,7 +131,7 @@ namespace Colambo
                     break;
                 case SDL_CONTROLLER_BUTTON_DPAD_DOWN:
                     _submenu++;
-                    if (_submenu > 5) _submenu = 5;
+                    if (_submenu > 6) _submenu = 6;
                     break;
                 case SDL_CONTROLLER_BUTTON_DPAD_UP:
                     _submenu--;
@@ -163,6 +163,9 @@ namespace Colambo
                         case 5:
                             colamboDumpElmoRegisters();
                             game->pushState(new Progress());
+                            break;
+                        case 6:
+                            colamboResetAbby();
                             break;
 /*                        case 6:
                             colamboDumpNvs();
