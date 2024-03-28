@@ -127,7 +127,7 @@ namespace Colambo
                     game->setState(new General());
                     break;
                 case SDL_CONTROLLER_BUTTON_A:
-                    colamboResetAbby();
+//                    colamboResetAbby();
                     break;
                 default:
                   break;
