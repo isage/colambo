@@ -718,7 +718,7 @@ int init_thread(SceSize args, void *argp)
     else
         strncat(info.batteryLotInfo, "-", 0x20);
 
-    if (l103->unkInfo[0] != 0xFF)
+    if (l103->unkInfo[0] != 0xFFFFFFFF)
         strncat(info.unkInfo, l103->unkInfo, 0x64);
     else
         strncat(info.unkInfo, "-", 0x64);
@@ -747,26 +747,44 @@ int init_thread(SceSize args, void *argp)
   if (ret >= 0) info.diagnosticsRun = 1;
   else
   {
+    info.diagnosticsRun = 0;
     ksceDebugPrintf("leaf 104 ret = 0x%08x\n", ret);
   }
 
   ret = ksceIdStorageReadLeaf(0x113, buf);
   if (ret >= 0)
   {
-    strncat(info.imei, buf, 32);
+    ksceDebugPrintf("leaf 113 %d %x\n", buf[0] != 0xFF, buf[0]);
+    if (buf[0] != 0xFF)
+    {
+        strncat(info.imei, buf, 32);
+    }
+    else
+    {
+        strncat(info.imei, "-", 32);
+    }
   }
   else
   {
+    strncat(info.imei, "-", 32);
     ksceDebugPrintf("leaf 113 ret = 0x%08x\n", ret);
   }
 
   ret = ksceIdStorageReadLeaf(0x115, buf);
   if (ret >= 0)
   {
-    strncat(info.productTypeInfo, buf, 0x10);
+    if (buf[0] != 0xFF)
+    {
+        strncat(info.productTypeInfo, buf, 0x10);
+    }
+    else
+    {
+      strncat(info.productTypeInfo, "-", 0x10);
+    }
   }
   else
   {
+    strncat(info.productTypeInfo, "-", 0x10);
     ksceDebugPrintf("leaf 115 ret = 0x%08x\n", ret);
   }
 
@@ -777,6 +795,7 @@ int init_thread(SceSize args, void *argp)
   }
   else
   {
+    memset(info.temperatureThreshhold, 0, 4);
     ksceDebugPrintf("leaf 117 ret = 0x%08x\n", ret);
   }
 
@@ -787,6 +806,7 @@ int init_thread(SceSize args, void *argp)
   }
   else
   {
+    memset(info.ethMacAddress, 0, 6);
     ksceDebugPrintf("leaf 119 ret = 0x%08x\n", ret);
   }
 
