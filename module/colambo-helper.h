@@ -134,6 +134,7 @@ extern "C"
     uint16_t abbyRegStatus; // 0x00
     uint16_t abbyRegRC; // 0x10
     uint16_t abbyRegFCC; // 0x12
+    uint16_t abbyUpdateStatus;
   } monitor_t;
 
 #pragma pack(pop)

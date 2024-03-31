@@ -538,6 +538,18 @@ int colamboGetMonitorData(monitor_t* monitor_out)
   memcpy(&monitor.currentCalibRam, packet.rx + 8, 2);
   memcpy(&monitor.currentCalib, packet.rx + 10, 2);
 
+
+  int subclass = 0x52;
+  sceSysconBatteryWriteRegForDriver(0x61, 0x0000); // allow dataflash access
+
+  // block 0
+  SceUInt16 target = (subclass & 0xFF) << 8 | 0x00;
+  sceSysconBatteryWriteRegForDriver(0x3e, target); // subclass, block
+  int reg = 0x44;
+  SceUInt16 data = 0;
+  sceSysconBatteryReadRegForDriver(reg,&data);
+  monitor.abbyUpdateStatus = data & 0xFF;
+
   int ret = ksceKernelMemcpyToUser(monitor_out, &monitor, sizeof(monitor_t));
 
   EXIT_SYSCALL(state);

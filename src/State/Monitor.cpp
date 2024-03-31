@@ -94,6 +94,9 @@ namespace Colambo
             Renderer::getInstance()->font.draw(8, 16+16*14, fmt::format("Abby:"), VGA_COLORS[0x34]);
             Renderer::getInstance()->font.draw(288, 16+16*14, fmt::format("RC: 0x{:04X} FCC: 0x{:04X}", _monitor.abbyRegRC, _monitor.abbyRegFCC), VGA_COLORS[0x1F]);
 
+            Renderer::getInstance()->font.draw(8, 16+16*16, fmt::format("Abby:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*16, fmt::format("Update status: 0x{:02X}", _monitor.abbyUpdateStatus), VGA_COLORS[0x1F]);
+
 //            drawHelpText("Test");
         }
 
@@ -125,9 +128,6 @@ namespace Colambo
                     break;
                 case SDL_CONTROLLER_BUTTON_RIGHTSHOULDER:
                     game->setState(new General());
-                    break;
-                case SDL_CONTROLLER_BUTTON_A:
-//                    colamboResetAbby();
                     break;
                 default:
                   break;
