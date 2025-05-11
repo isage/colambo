@@ -86,6 +86,7 @@ target_link_libraries(Colambo
     SDL2::SDL2-static
     jpeg
     webp
+    webpdemux
     png
     z
     colambo-helper_stub_weak

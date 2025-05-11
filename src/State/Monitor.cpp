@@ -76,26 +76,29 @@ namespace Colambo
             Renderer::getInstance()->font.draw(8, 16+16*2, fmt::format("MultiCn state:"), VGA_COLORS[0x34]);
             Renderer::getInstance()->font.draw(288, 16+16*2, fmt::format("0x{:08X}", _monitor.multicnState), VGA_COLORS[0x1F]);
 
-            Renderer::getInstance()->font.draw(8, 16+16*4, fmt::format("USB state:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*4, fmt::format("0: {} 1: {} 2: {}", _monitor.usb0State ? "client" : "host", _monitor.usb1State ? "client" : "host", _monitor.usb2State ? "client" : "host"), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(8, 16+16*4, fmt::format("MicroUsb state:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*4, fmt::format("0x{:08X}", _monitor.microusbState), VGA_COLORS[0x1F]);
 
-            Renderer::getInstance()->font.draw(8, 16+16*6, fmt::format("Cookie state:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*6, fmt::format("Reg01: 0x{:04X} Reg02: 0x{:04X}", _monitor.cookieReg01, _monitor.cookieReg02), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(8, 16+16*6, fmt::format("USB state:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*6, fmt::format("0: {} 1: {} 2: {}", _monitor.usb0State ? "client" : "host", _monitor.usb1State ? "client" : "host", _monitor.usb2State ? "client" : "host"), VGA_COLORS[0x1F]);
 
-            Renderer::getInstance()->font.draw(8, 16+16*8, fmt::format("HPRemote state:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*8, fmt::format("Mic: {:01X} HP: {:01X} DOCK: {:01X} REMOTE: {:01X}", _monitor.hpremoteMic, _monitor.hpremoteHp, _monitor.hpremoteDock, _monitor.hpremoteRemote), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(8, 16+16*8, fmt::format("Cookie state:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*9, fmt::format("Reg01: 0x{:04X} Reg02: 0x{:04X}", _monitor.cookieReg01, _monitor.cookieReg02), VGA_COLORS[0x1F]);
 
-            Renderer::getInstance()->font.draw(8, 16+16*10, fmt::format("VC calib:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*10, fmt::format("VolrageRam: 0x{:04X} Voltage: 0x{:04X} CurrentRam: 0x{:04X} Current: 0x{:04X}", _monitor.voltageCalibRam, _monitor.voltageCalib, _monitor.currentCalibRam, _monitor.currentCalib), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(8, 16+16*10, fmt::format("HPRemote state:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*10, fmt::format("Mic: {:01X} HP: {:01X} DOCK: {:01X} REMOTE: {:01X}", _monitor.hpremoteMic, _monitor.hpremoteHp, _monitor.hpremoteDock, _monitor.hpremoteRemote), VGA_COLORS[0x1F]);
 
-            Renderer::getInstance()->font.draw(8, 16+16*12, fmt::format("Abby:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*12, fmt::format("Flags: 0x{:04X} Status: 0x{:04X} SOH: 0x{:04X}", _monitor.abbyRegFlags, _monitor.abbyRegStatus, _monitor.abbyRegSOH), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(8, 16+16*12, fmt::format("VC calib:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*12, fmt::format("VolrageRam: 0x{:04X} Voltage: 0x{:04X} CurrentRam: 0x{:04X} Current: 0x{:04X}", _monitor.voltageCalibRam, _monitor.voltageCalib, _monitor.currentCalibRam, _monitor.currentCalib), VGA_COLORS[0x1F]);
 
             Renderer::getInstance()->font.draw(8, 16+16*14, fmt::format("Abby:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*14, fmt::format("RC: 0x{:04X} FCC: 0x{:04X}", _monitor.abbyRegRC, _monitor.abbyRegFCC), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(288, 16+16*14, fmt::format("Flags: 0x{:04X} Status: 0x{:04X} SOH: 0x{:04X}", _monitor.abbyRegFlags, _monitor.abbyRegStatus, _monitor.abbyRegSOH), VGA_COLORS[0x1F]);
 
             Renderer::getInstance()->font.draw(8, 16+16*16, fmt::format("Abby:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*16, fmt::format("Update status: 0x{:02X}", _monitor.abbyUpdateStatus), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(288, 16+16*16, fmt::format("RC: 0x{:04X} FCC: 0x{:04X}", _monitor.abbyRegRC, _monitor.abbyRegFCC), VGA_COLORS[0x1F]);
+
+            Renderer::getInstance()->font.draw(8, 16+16*18, fmt::format("Abby:"), VGA_COLORS[0x34]);
+            Renderer::getInstance()->font.draw(288, 16+16*18, fmt::format("Update status: 0x{:02X}", _monitor.abbyUpdateStatus), VGA_COLORS[0x1F]);
 
 //            drawHelpText("Test");
         }

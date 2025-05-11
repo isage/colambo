@@ -29,6 +29,7 @@ static monitor_t monitor = {0};
 static int _dump_progress = 0;
 
 int ksceSysconGetMultiCnInfo(SceUInt32 *pInfo);
+int ksceSysconGetMicroUsbInfo(SceUInt32 *pInfo);
 
 int sceSysconBatteryReadRegForDriver(SceUInt16 reg,SceUInt16 *data);
 int sceSysconBatteryWriteRegForDriver(SceUInt16 reg,SceUInt16 data);
@@ -507,6 +508,7 @@ int colamboGetMonitorData(monitor_t* monitor_out)
   ENTER_SYSCALL(state);
 
   ksceSysconGetMultiCnInfo(&monitor.multicnState);
+  ksceSysconGetMicroUsbInfo(&monitor.microusbState);
 
   monitor.usb0State = ksceUsbServMacGet(0);
   monitor.usb1State = ksceUsbServMacGet(1);

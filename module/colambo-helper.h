@@ -115,6 +115,7 @@ extern "C"
 
   typedef struct {
     uint32_t multicnState;
+    uint32_t microusbState;
     uint8_t usb0State;
     uint8_t usb1State;
     uint8_t usb2State;
