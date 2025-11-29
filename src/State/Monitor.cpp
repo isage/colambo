@@ -83,7 +83,7 @@ namespace Colambo
             Renderer::getInstance()->font.draw(288, 16+16*6, fmt::format("0: {} 1: {} 2: {}", _monitor.usb0State ? "client" : "host", _monitor.usb1State ? "client" : "host", _monitor.usb2State ? "client" : "host"), VGA_COLORS[0x1F]);
 
             Renderer::getInstance()->font.draw(8, 16+16*8, fmt::format("Cookie state:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*9, fmt::format("Reg01: 0x{:04X} Reg02: 0x{:04X}", _monitor.cookieReg01, _monitor.cookieReg02), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(288, 16+16*8, fmt::format("Reg01: 0x{:04X} Reg02: 0x{:04X}", _monitor.cookieReg01, _monitor.cookieReg02), VGA_COLORS[0x1F]);
 
             Renderer::getInstance()->font.draw(8, 16+16*10, fmt::format("HPRemote state:"), VGA_COLORS[0x34]);
             Renderer::getInstance()->font.draw(288, 16+16*10, fmt::format("Mic: {:01X} HP: {:01X} DOCK: {:01X} REMOTE: {:01X}", _monitor.hpremoteMic, _monitor.hpremoteHp, _monitor.hpremoteDock, _monitor.hpremoteRemote), VGA_COLORS[0x1F]);
