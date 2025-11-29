@@ -89,7 +89,7 @@ namespace Colambo
             Renderer::getInstance()->font.draw(288, 16+16*10, fmt::format("Mic: {:01X} HP: {:01X} DOCK: {:01X} REMOTE: {:01X}", _monitor.hpremoteMic, _monitor.hpremoteHp, _monitor.hpremoteDock, _monitor.hpremoteRemote), VGA_COLORS[0x1F]);
 
             Renderer::getInstance()->font.draw(8, 16+16*12, fmt::format("VC calib:"), VGA_COLORS[0x34]);
-            Renderer::getInstance()->font.draw(288, 16+16*12, fmt::format("VolrageRam: 0x{:04X} Voltage: 0x{:04X} CurrentRam: 0x{:04X} Current: 0x{:04X}", _monitor.voltageCalibRam, _monitor.voltageCalib, _monitor.currentCalibRam, _monitor.currentCalib), VGA_COLORS[0x1F]);
+            Renderer::getInstance()->font.draw(288, 16+16*12, fmt::format("VoltageRam: 0x{:04X} Voltage: 0x{:04X} CurrentRam: 0x{:04X} Current: 0x{:04X}", _monitor.voltageCalibRam, _monitor.voltageCalib, _monitor.currentCalibRam, _monitor.currentCalib), VGA_COLORS[0x1F]);
 
             Renderer::getInstance()->font.draw(8, 16+16*14, fmt::format("Abby:"), VGA_COLORS[0x34]);
             Renderer::getInstance()->font.draw(288, 16+16*14, fmt::format("Flags: 0x{:04X} Status: 0x{:04X} SOH: 0x{:04X}", _monitor.abbyRegFlags, _monitor.abbyRegStatus, _monitor.abbyRegSOH), VGA_COLORS[0x1F]);
